@@ -11,7 +11,7 @@ export default {
     },
     methods: {
         onClick(){
-            console.log('Task Added');
+            this.$emit('btn-click')
         }
     }
 }

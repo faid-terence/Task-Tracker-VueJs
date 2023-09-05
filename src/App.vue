@@ -1,43 +1,83 @@
 <template>
+  <!-- App container -->
   <div class="container">
-    <Header title="Task Tracker" />
-    <Tasks :tasks="tasks" />
+    <!-- Header component with event listener and props -->
+    <Header @toggle-add-task="onToggleAddTask" title="Task Tracker" :showAddTask="showAddTask"/>
+    <!-- AddTask component conditionally rendered based on showAddTask -->
+    <div v-show="showAddTask">
+      <!-- AddTask component with event listener -->
+      <AddTask @add-task="addTask" />
+    </div>
+    <!-- Tasks component with event listeners and props -->
+    <Tasks
+      @toggle-reminder="onToggleReminder"
+      @delete-task="deleteTask"
+      :tasks="tasks"
+    />
   </div>
 </template>
 
 <script>
+// Import Vue components
 import Header from "./components/Header.vue";
 import Tasks from "./components/Tasks.vue";
+import AddTask from "./components/AddTask.vue";
 
 export default {
   name: "App",
   components: {
     Header,
     Tasks,
+    AddTask,
   },
   data() {
     return {
+      // Data for tasks and UI state
       tasks: [],
+      showAddTask: false,
     };
   },
+  methods: {
+    // Toggle the display of the AddTask component
+    onToggleAddTask() {
+      this.showAddTask = !this.showAddTask;
+    },
+    // Add a new task to the tasks array
+    addTask(task) {
+      this.tasks = [...this.tasks, task];
+    },
+    // Delete a task by its ID
+    deleteTask(id) {
+      if (confirm("Are you Sure?")) {
+        this.tasks = this.tasks.filter((task) => task.id !== id);
+      }
+    },
+    // Toggle the reminder property of a task by its ID
+    onToggleReminder(id) {
+      this.tasks = this.tasks.map((task) =>
+        task.id === id ? { ...task, reminder: !task.reminder } : task
+      );
+    },
+  },
   created() {
+    // Initialize tasks with sample data
     this.tasks = [
       {
         id: 1,
         text: "Pre demo",
-        day: "1st Oct2023",
+        day: "1st Oct 2023",
         reminder: true,
       },
       {
         id: 2,
         text: "Pre demo",
-        day: "1st Oct2023",
+        day: "1st Oct 2023",
         reminder: true,
       },
       {
         id: 3,
         text: "Pre demo",
-        day: "1st Oct2023",
+        day: "1st Oct 2023",
         reminder: true,
       },
     ];
@@ -46,6 +86,8 @@ export default {
 </script>
 
 <style>
+
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
 
 * {
