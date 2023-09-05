@@ -1,15 +1,52 @@
-<script setup>
-import Header from './components/Header.vue'
-</script>
-
 <template>
   <div class="container">
-   <Header title="Task Tracker"/>
+    <Header title="Task Tracker" />
+    <Tasks :tasks="tasks" />
   </div>
 </template>
 
+<script>
+import Header from "./components/Header.vue";
+import Tasks from "./components/Tasks.vue";
+
+export default {
+  name: "App",
+  components: {
+    Header,
+    Tasks,
+  },
+  data() {
+    return {
+      tasks: [],
+    };
+  },
+  created() {
+    this.tasks = [
+      {
+        id: 1,
+        text: "Pre demo",
+        day: "1st Oct2023",
+        reminder: true,
+      },
+      {
+        id: 2,
+        text: "Pre demo",
+        day: "1st Oct2023",
+        reminder: true,
+      },
+      {
+        id: 3,
+        text: "Pre demo",
+        day: "1st Oct2023",
+        reminder: true,
+      },
+    ];
+  },
+};
+</script>
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
 
 * {
   box-sizing: border-box;
@@ -18,7 +55,7 @@ import Header from './components/Header.vue'
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .container {
